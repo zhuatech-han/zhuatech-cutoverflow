@@ -1,0 +1,10 @@
+CutoverFlow third-party notices
+
+Vue 3: MIT, Copyright (c) 2018-present, Yuxi (Evan) You.
+Full license: /third-party/vue.txt
+
+Lucide package: ISC; derived Feather icons retain their MIT notice.
+Full notices: /third-party/lucide.txt
+
+These licenses apply to their respective third-party components.
+The CutoverFlow original source is covered by the repository LICENSE.
