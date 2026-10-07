@@ -1,8 +1,12 @@
+[中文](README.md) | [English](README.en.md)
+
 <p><img src="frontend/public/brand/logo.jpg" width="180" alt="知华科技正式 LOGO"></p>
 
 # CutoverFlow · 系统切换与回退演练台账
 
-**知华科技公开源码学习版 0.1.0** · 上海如静知华信息科技有限公司 · [官网](https://www.zhuatech.cn/)
+**知华科技公开源码学习版 0.1.0／非商业源码版** · 知华科技（上海如静知华信息科技有限公司） · [官网](https://www.zhuatech.cn/)
+
+系统基于 Java 21／Spring Boot、Vue 3、MySQL 和 Flyway，提供方案冻结、任务依赖、独立核验与回退台账。
 
 一个跨团队切换窗口里，备份核对、数据转换、入口切换和业务验收常由不同人员负责。CutoverFlow 将方案、任务依赖、执行证据和回退核验放在同一条可追踪流程里，面向信息化实施团队、迁移协调员和切换指挥人员。
 
@@ -52,17 +56,25 @@
 | --- | --- |
 | ![登录](docs/screenshots/login.jpg) | ![本人工作台](docs/screenshots/workbench.jpg) |
 
+登录：会话认证。本人工作台：查看关联方案、执行与核验待办。
+
 | 冻结方案与任务依赖 | 运行执行与回退 |
 | --- | --- |
 | ![切换方案](docs/screenshots/plan.jpg) | ![运行执行台](docs/screenshots/run.jpg) |
+
+切换方案：查看冻结任务基线和依赖。执行台：记录指定人员的执行、核验和逆序回退证据。
 
 | 后台账号管理 | 数据统计 |
 | --- | --- |
 | ![账号管理](docs/screenshots/accounts.jpg) | ![运行统计](docs/screenshots/dashboard.jpg) |
 
+账号管理：维护部门、角色和启用状态。运行统计：汇总授权范围内的方案和运行状态。
+
 | 角色与数据权限 |
 | --- |
 | ![角色权限](docs/screenshots/permissions.jpg) |
+
+角色权限：配置接口权限与全部、部门、本人数据范围。
 
 业务端与管理端使用同一登录入口，按权限显示导航。详细操作见[操作手册](docs/操作手册.md)。
 
@@ -72,6 +84,7 @@
 
 ```sh
 python3 scripts/init-env.py
+docker compose config --quiet
 docker compose up -d --build --wait
 ```
 
@@ -92,7 +105,11 @@ docker compose up -d --build --wait
 # 先创建独立MySQL数据库、账号，并配置上述环境变量。
 cd backend
 mvn -B spotless:check test spring-boot:run
-# 另一个终端
+```
+
+另一个终端，在项目根目录：
+
+```sh
 cd frontend
 npm ci
 npm run dev
@@ -143,6 +160,8 @@ git diff --check
 
 ```sh
 python3 scripts/smoke.py --base http://127.0.0.1:8118 --env .env --allow-test-writes
+# 重启或独立恢复后，以对应地址重新登录并核对已验收和已回退的记录。
+python3 scripts/smoke.py --base http://127.0.0.1:8118 --env .env --verify-persistence
 ```
 
 镜像构建执行Maven测试，不跳过测试。H2自动化集成测试不能替代MySQL首次迁移、完整闭环与重启持久化验收。验证内容和安全限制见[测试与安全](docs/测试与安全.md)。
@@ -169,3 +188,5 @@ python3 scripts/smoke.py --base http://127.0.0.1:8118 --env .env --allow-test-wr
 <td align="center"><img src="docs/images/wechat-zhuatech.png" height="210" alt="知华科技微信咨询 zhuatech"><br>微信 zhuatech</td>
 <td align="center"><img src="docs/images/wechat-zhuatech2.png" height="210" alt="知华科技微信咨询 zhuatech2"><br>微信 zhuatech2</td>
 </tr></table>
+
+商业授权或深度定制开发请联系知华科技。
